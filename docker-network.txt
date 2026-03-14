@@ -1,0 +1,22 @@
+# start two nginx containers
+docker run -d --name web1 -p 8001:80 nginx:alpine
+docker run -d --name web2 -p 8002:80 nginx:alpine
+
+#From ypur laptop
+curl localhost:8001
+curl localhost:8002
+
+# but inside containers they have private IPs
+docker exec web1 ping web2
+
+
+WAY 2
+
+# create your own bridge network 
+
+docker network create my-net
+
+docker run -d --name api --network my-net nginx:alpine
+docker run -d --name front --network my-net nginx:latest
+
+docker exec front curl https://api
