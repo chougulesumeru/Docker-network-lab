@@ -1,0 +1,28 @@
+# create a docker network file
+
+version: "3.8"
+
+services:
+  bridge-default:
+    image: nginx:latest
+    container_name: test-default-bridge
+    ports:
+      - "8081:80"
+
+  bridge-custom:
+    image: nignx:latest
+    container_name: test-my-bridge
+    networks:
+      my-bridge:
+        ipv4_address: 172.25.0.10
+    ports:
+      - "8082:80"
+
+  frontend:
+    image: nginx:alpine
+    container_name: forntend-app
+    networks:
+      - frontend-net
+      - my-bridge #multi network example
+    ports:
+      - "8083:80"
