@@ -26,3 +26,12 @@ services:
       - my-bridge #multi network example
     ports:
       - "8083:80"
+
+networks:
+  my-bridge:
+    name: my-bridge
+    external: true
+
+  frontend:
+    name: frontend-net
+    external: true
